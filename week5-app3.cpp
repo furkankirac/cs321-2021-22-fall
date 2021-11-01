@@ -34,19 +34,19 @@ void transform(Container& container, FunctionPtr func)
         func(item);
 }
 
-//template<typename Container>
-//void transform(Container& container, FunctionPtr func, int by_what)
-//{
-//    for(auto& item : container)
-//        func(item, by_what);
-//}
+template<typename Container>
+void transform(Container& container, FunctionPtr func, int by_what)
+{
+    for(auto& item : container)
+        func(item, by_what);
+}
 
-//template<typename Container>
-//void transform(Container& container, FunctionPtr func, int p1, int p2)
-//{
-//    for(auto& item : container)
-//        func(item, p1, p2);
-//}
+template<typename Container>
+void transform(Container& container, FunctionPtr func, int p1, int p2)
+{
+    for(auto& item : container)
+        func(item, p1, p2);
+}
 
 template<typename Container>
 void print(const Container& container, std::string title)
