@@ -31,7 +31,77 @@ struct Course
 };
 
 // ----- WRITE HERE -----
+template<typename T>
+void my_swap(T& a, T& b)
+{
+    T c = a;
+    a = b;
+    b = c;
+}
 
+template<typename T>
+concept AnyContainer = requires(T t) {
+    t.begin();
+    t.end();
+    t.size();
+};
+
+template<typename Container>
+requires(AnyContainer<Container>)
+    auto& my_sort(Container& container, auto comparator)
+{
+    const auto sz = container.size();
+    for(auto i=0; i<sz-1; ++i)
+    {
+        auto it = container.begin();
+        for(auto j=0; j<sz-1; ++j) {
+            auto& a = *it;
+            ++it;
+            if(!comparator(a, *it))
+                my_swap(a, *it);
+        }
+    }
+    return container;
+}
+
+
+template<typename T>
+concept SelfPrinting = requires(T t) {
+    t.print();
+};
+
+template<typename T>
+requires(SelfPrinting<T>)
+    void print(const T& item)
+{
+    item.print();
+}
+
+void print(const auto& item)
+{
+    std::cout << item;
+}
+
+template<typename Container>
+requires(AnyContainer<Container>)
+    void print(const Container& container, const std::string& title)
+{
+    std::cout << title << std::endl;
+    auto is_first_item = true;
+    for(const auto& item : container)
+    {
+        if(!is_first_item)
+            std::cout << ", ";
+        else
+            is_first_item = false;
+
+        print(item);
+    }
+    std::cout << std::endl << std::endl;
+}
+
+auto ascending_by_name = []<typename T>(const T& a, const T& b) { return a.name < b.name; };
+auto descending_by_code = []<typename T>(const T& a, const T& b) { return a.code > b.code; };
 // ----- WRITE HERE -----
 
 int main(int argc, char* argv[])
