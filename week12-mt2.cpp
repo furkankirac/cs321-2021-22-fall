@@ -54,7 +54,35 @@ auto filter_(const Container& container, auto lambda)
 }
 
 // YOU CAN WRITE YOUR CODE HERE - BEGIN 1
+template<typename T, int level=0>
+auto print_(const T& input)
+{
+    if constexpr(IsContainer<T> && !is_same_v<T, string>)
+    {
+        for(int i=0; i<level; ++i)
+            cout << " ";
+        cout << "level " << level << ": current item is a container with " << input.size() << " items which are:" << endl;
+        for(const auto& item : input)
+            print_<std::remove_cvref_t<decltype(item)>, level+1>(item);
+        cout << endl;
+    }
+    else
+    {
+        for(int i=0; i<level-1; ++i)
+            cout << " ";
+        cout << input << endl;
+    }
+}
 
+auto print_(const auto& ... inputs)
+{
+    auto printer = [index=0](const auto& x) mutable {
+        ++index;
+        cout << "Printing item " << index << endl;
+        print_(x);
+    };
+    (printer(inputs), ...);
+}
 // YOU CAN WRITE YOUR CODE HERE - END 1
 
 int main(int, char* [])
@@ -88,7 +116,20 @@ int main(int, char* [])
     // Q6 (10pts): Snapshot 2
 
     // YOU CAN WRITE YOUR CODE HERE - BEGIN 2
+    auto initval1 = string{"START"};
+    auto lambda1 = [](const auto& a, const auto& b) { return a + "_" + b; };
 
+    auto initval2 = vector<vector<string>>{};
+
+    auto lambda2 = [](const auto& container, const auto& item) {
+        const auto group_id = item.length();
+        auto container_new = container;
+        if(container_new.size() < group_id+1)
+            container_new.resize(group_id+1);
+        container_new[group_id].push_back(item);
+        return container_new;
+    };
+    auto lambda_filter = [](const auto& item) { return item.size() > 0; };
     // YOU CAN WRITE YOUR CODE HERE - END 2
 
     {
