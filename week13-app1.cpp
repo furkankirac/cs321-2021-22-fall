@@ -21,7 +21,7 @@ void print_(const auto& container)
 
 
 template<typename Container1, typename Container2, typename FUNC>
-auto inner_product(const Container1& c1, const Container2& c2, FUNC func)
+auto cartesian_product(const Container1& c1, const Container2& c2, FUNC func)
 {
     for(const auto& i1 : c1)
         for(const auto& i2 : c2)
@@ -29,7 +29,7 @@ auto inner_product(const Container1& c1, const Container2& c2, FUNC func)
 }
 
 template<typename Container1, typename Container2, typename Container3, typename FUNC>
-auto inner_product(const Container1& c1, const Container2& c2, const Container3& c3, FUNC func)
+auto cartesian_product(const Container1& c1, const Container2& c2, const Container3& c3, FUNC func)
 {
     for(const auto& i1 : c1)
         for(const auto& i2 : c2)
@@ -94,7 +94,7 @@ int main(int argc, char* argv[])
 //    take_minimumof(v1.size(), v2.size());
 
 
-//    inner_product(v1, v2, [](int i, const string& s) {
+//    cartesian_product(v1, v2, [](int i, const string& s) {
 //        cout << i << "/" << s << endl;
 //    });
 //    for(const auto& i1 : v1)
