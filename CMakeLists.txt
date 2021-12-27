@@ -1,6 +1,8 @@
 project(CS321)
 
 SET(CMAKE_CXX_STANDARD 20)
+include_directories("range-v3/include")
+
 add_executable(w1a1 "week1-app1.cpp")
 add_executable(w2a1 "week2-app1.cpp")
 add_executable(w3a1 "week3-app1.cpp" "week3-app1.hpp")
@@ -23,3 +25,5 @@ add_executable(w11a1 "week11-app1.cpp")
 add_executable(w12mt2 "week12-mt2.cpp")
 add_executable(w13a1 "week13-app1.cpp")
 add_executable(w13a2 "week13-app2.cpp")
+add_executable(w14a1 "week14-app1.cpp")
+add_executable(w14a2 "week14-app2.cpp")
