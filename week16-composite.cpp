@@ -67,7 +67,33 @@ int main(int argc, char* argv[])
 
     // WRITE YOUR SOLUTIONS HERE - BEGIN //
 
+    cout << "encrypted (v1)   : ";
+    auto enc_v1 = s | views::transform([&](char c) {
+                      return char('a' + (ranges::find(encrypt_dict, c) - ranges::begin(encrypt_dict)));
+                  }) | to<string>();
+    cout << enc_v1 << endl;
+    cout << "decrypted (v1)   : ";
+    auto dec_v1 = enc_v1 | views::transform([&](char c) {
+                      return encrypt_dict[c - 'a'];
+                  }) | to<string>();
+    cout << dec_v1 << endl;
 
+    cout << "encrypted (v2)   : ";
+    auto enc_v2 = views::zip_with(
+                      [&](char c, int i) {
+                          auto it = ranges::find(encrypt_dict, c);
+                          return char('a' + (i + (it-ranges::begin(encrypt_dict))) % 26);
+                      }, s, views::ints(0, unreachable)
+                      ) | to<string>();
+    cout << enc_v2 << endl;
+
+    cout << "decrypted (v2)   : ";
+    auto dec_v2 = views::zip_with(
+                      [&](char c, int i) {
+                          return encrypt_dict[(c-'a'-i+26)%26];
+                      }, enc_v2, views::ints(0, unreachable)
+                      ) | to<string>();
+    cout << dec_v2 << endl;
 
     // WRITE YOUR SOLUTIONS HERE - END //
 
